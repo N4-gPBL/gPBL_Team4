@@ -1,0 +1,11 @@
+<!-- templates/register.html -->
+{% extends 'base.html' %}
+{% block title %} Homework register {% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+        <a href="{% url 'login' %}">Login</a>
+    </form>
+{% endblock %}
