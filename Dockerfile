@@ -1,20 +1,33 @@
-FROM python:3.8
+FROM python:3.9 AS base
 
-# Set the working directory to /app
+FROM base AS python-base
 
-WORKDIR /app
+# Install pipenv and compilation dependencies
+RUN pip install pipenv
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
-# Copy the current directory contents into the container at /app
-
-COPY . /app
-
-# Install any needed packages specified in requirements.txt
-
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
-
-# Make port 8000 available to the world outside this container
-
-EXPOSE 1337
+# Install python dependencies in /.venv
+COPY Pipfile .
+COPY Pipfile.lock .
+RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:1337"]
+FROM base as runtime
+
+# Copy virtual env from python-base stage
+COPY --from=python-base /.venv /.venv
+ENV PATH="/.venv/bin:$PATH"
+
+# Create and switch to a new user
+RUN useradd --create-home appuser
+WORKDIR /home/appuser
+USER appuser
+
+# Install application into container
+COPY . .
+
+# Run the application
+
+EXPOSE 8000
+
+ENTRYPOINT ["python", "manage.py", "runserver","0.0.0.0:8000","--noreload"]
