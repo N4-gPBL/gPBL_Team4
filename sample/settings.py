@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts'
+    'users',
+    'shifts'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,5 @@ REST_FRAMEWORK = {
 }
 
 AUTH_TOKEN_VALIDITY = timedelta(days=1)
+
+AUTH_USER_MODEL = 'users.User'

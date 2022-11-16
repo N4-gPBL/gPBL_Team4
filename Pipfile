@@ -9,6 +9,7 @@ djangorestframework = "*"
 pygments = "*"
 djangorestframework-simplejwt = "*"
 timedelta = "*"
+django-rest-swagger = "*"
 
 [dev-packages]
 
