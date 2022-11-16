@@ -3,10 +3,11 @@ from rest_framework import serializers
 class ShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shift
-        fields = ('shift_start', 'shift_end','shift_date', 'shift_status', 'shift_created_at', 'shift_updated_at')
+        fields = ('shift_id','shift_start', 'shift_end','shift_date', 'shift_status', 'shift_created_at', 'shift_updated_at')
     
     def __init__(self, instance=None, data=..., **kwargs):
         super().__init__(instance, data, **kwargs)
+        self.fields['shift_id'].read_only = True
         self.fields['shift_start'].required = True
         self.fields['shift_end'].required = True
         self.fields['shift_date'].required = True
@@ -26,11 +27,11 @@ class ShiftSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
- 
+
 class UserShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserShift
-        fields = ('id', 'user_shift_user_id', 'user_shift_shift_id', 'user_shift_status', 'user_shift_created_at', 'user_shift_updated_at')
+        fields = ('user_shift_user_id', 'user_shift_shift_id', 'user_shift_status', 'user_shift_created_at', 'user_shift_updated_at')
     
     def __init__(self, instance=None, data=..., **kwargs):
         super().__init__(instance, data, **kwargs)

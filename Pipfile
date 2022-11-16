@@ -5,11 +5,13 @@ name = "pypi"
 
 [packages]
 django = "*"
-djangorestframework = "*"
+djangorestframework = "==3.11"
 pygments = "*"
 djangorestframework-simplejwt = "*"
 timedelta = "*"
 django-rest-swagger = "*"
+jwt = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
