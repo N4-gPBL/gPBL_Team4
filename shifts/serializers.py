@@ -39,3 +39,12 @@ class UserShiftSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_shift = UserShift.objects.create(**validated_data)
         return user_shift
+
+    
+class UsersShiftSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserShift
+        fields = ('user_shift_user_id', 'user_shift_shift_id', 'user_shift_status', 'user_shift_created_at', 'user_shift_updated_at','user')
+    
+    def __init__(self, instance=None, data=..., **kwargs):
+        super().__init__(instance, data, **kwargs)

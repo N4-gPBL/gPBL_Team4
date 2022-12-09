@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ShiftSerializer, UserShiftSerializer
+from .serializers import ShiftSerializer, UserShiftSerializer,UsersShiftSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Shift,UserShift
+import sys
+from users.models import User
 import jwt
 from django.conf import settings
 # Create your views here.
@@ -73,3 +75,11 @@ def unassignShift(request, shift_id):
     user_shift = UserShift.objects.get(user_shift_shift_id=shift)
     user_shift.delete()
     return Response('Unassigned successful', status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUsersInShift(request,shift_id):
+    user_shifts = UserShift.objects.prefetch_related('users').filter(user_shift_shift_id=shift_id)
+    serializer = UserShiftSerializer(user_shifts, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

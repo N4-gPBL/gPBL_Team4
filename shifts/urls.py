@@ -12,4 +12,5 @@ urlpatterns = [
     path('delete/<int:shift_id>', views.deleteShift, name='deleteShift'),
     path('assign/<int:shift_id>', views.assignShift, name='assignShift'),
     path('unassign/<int:shift_id>', views.unassignShift, name='unassignShift'),
+    path('users/<int:shift_id>', views.getUsersInShift, name='getUser')
 ]

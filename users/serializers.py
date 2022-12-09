@@ -41,3 +41,16 @@ class UserSerializers(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
+
+
+
+class UserListSerializers(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    password = serializers.CharField()
+    email = serializers.CharField()
+    username = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'first_name', 'last_name')
