@@ -10,8 +10,10 @@ pygments = "*"
 djangorestframework-simplejwt = "*"
 timedelta = "*"
 django-rest-swagger = "*"
-jwt = "*"
 drf-yasg = "*"
+python-jwt = "*"
+channels = "*"
+pillow = "*"
 
 [dev-packages]
 

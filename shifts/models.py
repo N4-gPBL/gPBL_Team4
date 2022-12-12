@@ -9,7 +9,7 @@ class Shift(models.Model):
     shift_status = models.BooleanField(default=True)
     shift_created_at = models.DateTimeField(auto_now_add=True)
     shift_updated_at = models.DateTimeField(auto_now=True)
-
+    users = models.ManyToManyField('users.User', through='shifts.UserShift')
     class Meta:
         db_table = 'shift'
 

@@ -13,7 +13,9 @@ class UserSerializers(serializers.ModelSerializer):
     is_admin = serializers.BooleanField(default=False)
     is_staff = serializers.BooleanField(default=False)
     is_superuser = serializers.BooleanField(default=False)
-
+    counter = serializers.IntegerField(default=0)
+    shifts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # images = serializers.ImageField(upload_to='users/%Y/%m/%d/', null=True, blank=True)
     def __init__(self, instance=None, data=..., **kwargs):
         super().__init__(instance, data, **kwargs)
         self.fields['id'].read_only = True
@@ -28,10 +30,12 @@ class UserSerializers(serializers.ModelSerializer):
         self.fields['is_superuser'].required = False
         self.fields['last_login'].required = False
         self.fields['date_joined'].required = False
-    
+        self.fields['counter'].required = False
+        self.fields['shifts'].required = False
+        self.fields['images'].required = False
     class Meta:
         model = User
-        fields = ('id', 'password', 'email', 'username', 'first_name', 'last_name', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 'last_login', 'date_joined')
+        fields = ('id', 'password', 'email', 'username', 'first_name', 'last_name', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 'last_login', 'date_joined', 'counter', 'shifts', 'images')
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
@@ -41,16 +45,3 @@ class UserSerializers(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
-
-
-
-class UserListSerializers(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    password = serializers.CharField()
-    email = serializers.CharField()
-    username = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'username', 'first_name', 'last_name')

@@ -1,16 +1,16 @@
 from django.urls import path
 from . import views
-from rest_framework_swagger.views import get_swagger_view
 
-schema_view = get_swagger_view(title='Shifts API')
 
 urlpatterns = [
     path('create', views.createShift, name='createShift'),
-    path('get/<int:shift_id>', views.getShift, name='getShift'),
+    path('<int:shift_id>', views.getShift, name='getShift'),
     path('list', views.getAllShifts, name='getAllShifts'),
     path('update/<int:shift_id>', views.updateShift, name='updateShift'),
     path('delete/<int:shift_id>', views.deleteShift, name='deleteShift'),
     path('assign/<int:shift_id>', views.assignShift, name='assignShift'),
     path('unassign/<int:shift_id>', views.unassignShift, name='unassignShift'),
-    path('users/<int:shift_id>', views.getUsersInShift, name='getUser')
+    path('get_users/<int:shift_id>', views.getUsersInShift, name='getUser'),
+    path('users/<int:user_id>', views.getShiftsOfUserById, name='getShifts'),
+    path('user_shifts', views.getShiftsOfUser, name='getShifts'),
 ]

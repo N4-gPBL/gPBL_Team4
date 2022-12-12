@@ -5,7 +5,6 @@ class User(AbstractUser):
     last_login = None
     is_staff = None
     is_superuser = None
-
     password = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
@@ -17,7 +16,10 @@ class User(AbstractUser):
     is_superuser = models.BooleanField(default=False)
     last_login = models.DateTimeField(auto_now_add=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-
+    # array images
+    images = models.JSONField(default=list)
+    shifts = models.ManyToManyField('shifts.Shift', through='shifts.UserShift')
+    counter = models.IntegerField(default=0)
     def __str__(self):
         return self.username
 

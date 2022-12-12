@@ -3,7 +3,7 @@ from rest_framework import serializers
 class ShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shift
-        fields = ('shift_id','shift_start', 'shift_end','shift_date', 'shift_status', 'shift_created_at', 'shift_updated_at')
+        fields = ('shift_id','shift_start', 'shift_end','shift_date', 'shift_status', 'shift_created_at', 'shift_updated_at','users')
     
     def __init__(self, instance=None, data=..., **kwargs):
         super().__init__(instance, data, **kwargs)
@@ -14,6 +14,7 @@ class ShiftSerializer(serializers.ModelSerializer):
         self.fields['shift_status'].required = False
         self.fields['shift_created_at'].required = False
         self.fields['shift_updated_at'].required = False
+        self.fields['users'].required = False
     def create(self, validated_data):
         shift = Shift.objects.create(**validated_data)
         return shift

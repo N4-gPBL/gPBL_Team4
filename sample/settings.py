@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-xw*j!b&v0u=@a+uq4i(!%r0a+4#yi@4c@(hg__thxf5ctf2jco
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+
+]
 
 
 # Application definition
@@ -40,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'shifts',
-    'rest_framework_swagger',
+    'channels',
+    # 'rest_framework_swagger',
     'drf_yasg'
 ]
 
@@ -150,3 +155,14 @@ SIMPLE_JWT = {
     'ALGORITHM' : 'HS256'
 }
 
+# ASGI_APPLICATION = "sample.routing.application" #routing.py will handle the ASGI
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': "channels.layers.InMemoryChannelLayer"
+#         }
+# }
+
+MEDIA_URL = 'uploads/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
