@@ -28,8 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1'
-
+    '127.0.0.1',
+    '36ec-104-28-222-75.ngrok.io',
+    '0.0.0.0'
 ]
 
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'users',
     'shifts',
     'channels',
+    'notifications',
     # 'rest_framework_swagger',
     'drf_yasg'
 ]
@@ -155,12 +157,6 @@ SIMPLE_JWT = {
     'ALGORITHM' : 'HS256'
 }
 
-# ASGI_APPLICATION = "sample.routing.application" #routing.py will handle the ASGI
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': "channels.layers.InMemoryChannelLayer"
-#         }
-# }
 
 MEDIA_URL = 'uploads/'
 
