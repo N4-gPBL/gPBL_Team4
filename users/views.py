@@ -79,3 +79,17 @@ def uploadImages(request, user_id):
     user.save()
     return Response('Upload image successfully', status=status.HTTP_200_OK)
     
+#Delete images
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteImages(request, user_id):
+    user = User.objects.get(id=user_id)
+    #Get image name from request
+    image_name = request.data['image_name']
+    #Remove image from folder
+    fs = FileSystemStorage()
+    fs.delete(image_name)
+    #Remove image name from user images field
+    user.images.remove(image_name)
+    user.save()
+    return Response('Delete image successfully', status=status.HTTP_200_OK)
