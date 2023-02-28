@@ -9,4 +9,6 @@ urlpatterns = [
     path('upload/<int:user_id>', views.uploadImages, name='uploadImages'),
     #Delete images
     path('delete/<int:user_id>', views.deleteImages, name='deleteImages'),
+    #Update is active user
+    path('update/<int:user_id>', views.updateUser, name='updateUser'),
 ]

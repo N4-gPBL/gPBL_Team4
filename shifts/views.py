@@ -41,7 +41,8 @@ def getShift(request, shift_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllShifts(request):
-    shifts = Shift.objects.all()
+    # get all shifts sorted by date desc
+    shifts = Shift.objects.all().order_by('-shift_date')
     serializer = ShiftSerializer(shifts, many=True)
     for data in serializer.data:
         users = data['users']
@@ -81,6 +82,11 @@ def assignShift(request, shift_id):
         'user_shift_shift_id': shift_id,
         'user_shift_status': True,
     }
+    # If user already assigned to shift, return error
+    user_shift = UserShift.objects.filter(user_shift_user_id=user_data['user_id'], user_shift_shift_id=shift_id)
+    if len(user_shift) > 0:
+        return Response('User already assigned to shift', status=status.HTTP_400_BAD_REQUEST)
+
     serializer = UserShiftSerializer(data=data)
     if serializer.is_valid():
         serializer.save()

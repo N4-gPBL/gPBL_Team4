@@ -30,9 +30,13 @@ def getAllNotifications(request):
     if len(serializer.data) == 0:
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-        notifications = serializer.data
-        for notification in notifications:
+        notifications_data = serializer.data
+        for notification in notifications_data:
+            notification['user'] = []
             user_detail = User.objects.filter(id=notification['notifications_user_id'])
-            notification['user'].append(UserSerializers(user_detail, many=True).data[0])
-    return Response(notifications, status=status.HTTP_200_OK)
+            user_serializer = UserSerializers(user_detail, many=True)
+            notification['user'].append(user_serializer.data[0])
+            notification['user'] = notification['user'][0]
+
+        return Response(notifications_data, status=status.HTTP_200_OK)
 

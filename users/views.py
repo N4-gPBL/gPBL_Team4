@@ -93,3 +93,12 @@ def deleteImages(request, user_id):
     user.images.remove(image_name)
     user.save()
     return Response('Delete image successfully', status=status.HTTP_200_OK)
+
+#Update is active user
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUser(request, user_id):
+    user = User.objects.get(id=user_id)
+    user.is_active = request.data['is_active']
+    user.save()
+    return Response('Update user successfully', status=status.HTTP_200_OK)
