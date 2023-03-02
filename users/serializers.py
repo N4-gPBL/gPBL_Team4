@@ -45,3 +45,4 @@ class UserSerializers(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
+##
